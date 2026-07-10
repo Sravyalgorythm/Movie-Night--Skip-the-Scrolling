@@ -80,8 +80,17 @@ movies = [
 ]
 movie_df=pd.DataFrame(movies)
 print(movie_df)
-
+available_genres=[]
+for i in movie_df["Genre"]:
+    for j in i:
+        if j not in available_genres: 
+            available_genres.append(j)
+available_genres.sort()
+print("AVAILABLE GENRES - ")
+for i in available_genres:
+    print(f" ~ {i}",end="\n")
 choice=input("What Genre are you feeling? - ")
+
 
 platform=input("What streaming service would you prefer? (any, Netflix, Prime Video, Hulu, Jio Cinema, Disney Plus Hotstar) - ")
 print("Your rec for tonight - ")
@@ -99,4 +108,3 @@ if count!=1:
     print("Enjoy!")
 else:
     print("Oops- Looks like your Genre isnt here right now.")
-       
