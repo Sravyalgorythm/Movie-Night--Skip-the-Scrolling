@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Aug  8 22:31:51 2026
-
-@author: pradeepp
-"""
-
 import pandas as pd
 
 movies = [
