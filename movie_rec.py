@@ -90,7 +90,17 @@ movies = [
     }
 ]
 movie_df=pd.DataFrame(movies)
-print(movie_df)
+sno=1
+for i in movies:
+    print(f"#{sno}.{i['Movie']}")
+    sno+=1
+watched=[]
+print()
+watched_input = input("Enter the numbers of movies you've watched: ")
+watched_numbers = watched_input.split(",")
+watched_numbers = [int(i) for i in watched_numbers]
+for i in watched_numbers:
+    watched.append(movies[i - 1]["Movie"])
 available_genres=[]
 for i in movie_df["Genre"]:
     for j in i:
@@ -120,21 +130,23 @@ for i,r in movie_df.iterrows():
                     or platform.lower() in [p.lower() for p in r["Platform"]])
     if genre_match and platform_match:
         matches.append(r)
-if (len(matches)==0):
-    print("Sorry, it looks like there are no matches right now.")
-    
-        
-elif (len(matches)==1):
-    print(f"\nYou have {len(matches)} recommendation!\n")
+recs=[]
+for i in matches:
+    if i['Movie'] not in watched:
+        recs.append(i)
+if (len(recs)==0):
+    print("Sorry, it looks like there are no new matches right now.")
+       
+elif (len(recs)==1):
+    print(f"\nYou have {len(recs)} recommendation!\n")
 else:
-    print(f"\nYou have {len(matches)} recommendations!\n")
-for r in matches:
+    print(f"\nYou have {len(recs)} recommendations!\n")
+for r in recs:
     print(f"{count}) {r['Movie']}")
     print("Release date - ",r["Released"])
     print("Available on - ",", ".join(r["Platform"]))
     print(f"IMDB - {r['IMDB']}")
     print()
     count=count+1
-if len(matches)!=0:
-    print("Enjoy!")
-       
+if len(recs)!=0:
+    print("Enjoy!") 
