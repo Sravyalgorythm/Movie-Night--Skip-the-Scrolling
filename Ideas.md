@@ -3,8 +3,8 @@
 Features I want to build as I learn.
 
 ## In Progress
-- [ ] IMDb ratings
-- [ ] Already watched option
+- [X] IMDb ratings
+- [X] Already watched option
 - [ ] Random recommendation
 
 ## Future Ideas
@@ -16,3 +16,4 @@ Features I want to build as I learn.
 - [ ] Explain why each movie was recommended
 - [ ] Filter by release year
 - [ ] Filter by runtime
+- [ ] Option to rewatch movies that have already been watched
