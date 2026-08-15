@@ -5,6 +5,7 @@ Created on Fri Aug 14 20:44:30 2026
 @author: Usha
 """
 
+
 import pandas as pd
 import streamlit as st
 
@@ -121,7 +122,11 @@ platform = st.selectbox(
     "What streaming service would you prefer?",
     ["ANY"] + available_platforms
 )
-
+min_rating = st.number_input("Minimum IMDb rating",
+    min_value=0.0,
+    max_value=10.0,
+    value=0.0,
+    step=0.1)
 
 if st.button("Recommend"):
     matches = []
@@ -132,9 +137,11 @@ if st.button("Recommend"):
             platform.lower() == "any"
             or platform.lower() in [p.lower() for p in r["Platform"]]
             )
+        rating_match = r["IMDB"] >= min_rating
 
-        if genre_match and platform_match:
+        if genre_match and platform_match and rating_match:
             matches.append(r)
+        matches.sort(key=lambda r: r["IMDB"], reverse=True)
 
     if len(matches) == 0:
         st.write("Sorry, no matches right now.")
@@ -145,5 +152,7 @@ if st.button("Recommend"):
     for r in matches:
         st.subheader(r["Movie"])
         st.write("Release date:", r["Released"])
+        st.write("Available on:", ", ".join(r["Platform"]))
+        st.write("IMDB:", r["IMDB"])eleased"])
         st.write("Available on:", ", ".join(r["Platform"]))
         st.write("IMDB:", r["IMDB"])
