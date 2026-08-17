@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 14 20:44:30 2026
+
+@author: Usha
+"""
+
 import pandas as pd
 import streamlit as st
 
@@ -142,8 +148,12 @@ min_rating = st.number_input("Minimum IMDb rating",
     max_value=10.0,
     value=0.0,
     step=0.1)
+watched = st.multiselect(
+    "Already watched?",
+    movie_df["Movie"].tolist()
+)
 
-def recommend_movies(movie_df, choice, platform, min_rating):
+def recommend_movies(movie_df, choice, platform, min_rating,watched):
     matches = []
 
     for i, r in movie_df.iterrows():
@@ -156,19 +166,21 @@ def recommend_movies(movie_df, choice, platform, min_rating):
 
         rating_match = r["IMDB"] >= min_rating
 
-        if genre_match and platform_match and rating_match:
+        if genre_match and platform_match and rating_match and r['Movie'] not in watched:
             matches.append(r)
 
     matches.sort(key=lambda r: r["IMDB"], reverse=True)
-
     return matches
+    
+
 
 if st.button("Recommend"):
     matches = recommend_movies(
         movie_df,
         choice,
         platform,
-        min_rating
+        min_rating,
+        watched
     )
 
     if len(matches) == 0:
